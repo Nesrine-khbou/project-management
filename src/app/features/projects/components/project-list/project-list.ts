@@ -102,4 +102,17 @@ export class ProjectList {
       return matchSearch && matchStatus;
     });
   }
+
+
+  getProjectProgress(project: any): number {
+  const totalTasks = project.tasks.length;
+  if (totalTasks === 0) return 0;
+
+  const completedTasks = project.tasks.filter(
+    (task: any) => task.status === 'Terminé'
+  ).length;
+
+  return Math.round((completedTasks / totalTasks) * 100);
+}
+
 }

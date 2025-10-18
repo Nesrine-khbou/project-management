@@ -42,6 +42,28 @@
           </span>
         </div>
 
+
+      <!-- Project Progress -->
+      <div class="mb-4">
+        <div class="flex justify-between text-sm text-gray-600 mb-1">
+          <span> <strong>Progression</strong> </span>
+          <span>{{ getProjectProgress(project) }}%</span>
+        </div>
+
+        <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+          <div
+            class="h-2 rounded-full transition-all duration-500 ease-in-out"
+            [ngClass]="{
+              'bg-red-300': getProjectProgress(project) < 40,
+              'bg-yellow-400': getProjectProgress(project) >= 40 && getProjectProgress(project) < 80,
+              'bg-green-500': getProjectProgress(project) >= 80
+            }"
+            [style.width.%]="getProjectProgress(project)"
+          ></div>
+        </div>
+      </div>
+
+
         <!-- Task List -->
         <app-task-list [tasks]="project.tasks"></app-task-list>
       </div>
