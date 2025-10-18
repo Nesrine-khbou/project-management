@@ -16,32 +16,131 @@
 
 <ul class="space-y-3 mt-4">
   @if (filteredTasks.length > 0) {
-  @for (task of filteredTasks; track task.title) {
-    <li class="bg-gray-50 rounded-xl p-4 flex items-center justify-between border border-gray-200 hover:bg-gray-100 transition-colors duration-300">
-      <div>
-        <p class="text-gray-900 font-medium text-sm md:text-base">{{ task.title }}</p>
-        <p class="text-gray-500 text-xs mt-1">
-          Priorité :
-          <span class="font-semibold text-gray-700">{{ task.priority }}</span>
-        </p>
-      </div>
-
-      <span
-        class="px-3 py-1 text-xs font-semibold rounded-full"
-        [ngClass]="{
-          'bg-red-100 text-red-700': task.status === 'En attente',
-          'bg-yellow-100 text-yellow-700': task.status === 'En cours',
-          'bg-green-100 text-green-700': task.status === 'Terminé'
-        }"
+    @for (task of filteredTasks; track task.title) {
+      <li
+        class="bg-gray-50 rounded-xl p-4 flex items-center justify-between border border-gray-200 hover:bg-gray-100 transition-colors duration-300"
       >
-        {{ task.status }}
-      </span>
-    </li>
-  }
-    } 
-  @else {
+        <div>
+          <p class="text-gray-900 font-medium text-sm md:text-base">{{ task.title }}</p>
+          <p class="text-gray-500 text-xs mt-1">
+            Priorité :
+            <span class="font-semibold text-gray-700">{{ task.priority }}</span>
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span
+            class="px-3 py-1 text-xs font-semibold rounded-full"
+            [ngClass]="{
+              'bg-red-100 text-red-700': task.status === 'En attente',
+              'bg-yellow-100 text-yellow-700': task.status === 'En cours',
+              'bg-green-100 text-green-700': task.status === 'Terminé'
+            }"
+          >
+            {{ task.status }}
+          </span>
+
+          <!-- Détails Button -->
+          <button
+            (click)="openDetails(task)"
+            class="px-3 py-1.5 text-sm font-medium text-gray-700 rounded-full
+                  bg-gray-100 hover:bg-gray-800
+                  shadow-sm hover:shadow-md
+                  transition-all duration-300 ease-in-out"
+          >
+            Détails
+          </button>
+
+        </div>
+      </li>
+    }
+  } @else {
     <li class="text-gray-500 text-center py-4 italic">
       Aucune tâche trouvée.
     </li>
   }
 </ul>
+
+<!-- Modal -->
+@if (showModal && selectedTask) {
+  <div
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm"
+    (click)="closeModal()"
+  >
+    <div
+      class="bg-white rounded-2xl p-6 max-w-lg w-full shadow-xl relative animate-fade-in"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Close Button -->
+      <button
+        class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl"
+        (click)="closeModal()"
+      >
+        ✕
+      </button>
+
+      <!-- Header -->
+      <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-3">
+        {{ selectedTask.title }}
+      </h2>
+
+      <!-- Progress Bar -->
+      <div class="mb-6">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm font-medium text-gray-700">Progression</span>
+          <span class="text-sm font-semibold text-gray-800">{{ selectedTask.progress }}</span>
+        </div>
+
+        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+          <div
+            class="h-3 rounded-full shadow-inner transition-all duration-500 ease-in-out"
+            [ngClass]="getProgressColor(selectedTask.progress)"
+            [style.width]="selectedTask.progress"
+          ></div>
+        </div>
+      </div>
+
+
+      <!-- Task Details Grid -->
+      <div class="grid grid-cols-2 gap-4 mb-5">
+        <div>
+          <p class="text-sm text-gray-500">Priorité</p>
+          <p class="font-medium text-gray-800">{{ selectedTask.priority }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Statut</p>
+          <span
+            class="inline-block mt-1 px-3 py-1 text-xs font-semibold rounded-full"
+            [ngClass]="{
+              'bg-red-100 text-red-700': selectedTask.status === 'En attente',
+              'bg-yellow-100 text-yellow-700': selectedTask.status === 'En cours',
+              'bg-green-100 text-green-700': selectedTask.status === 'Terminé'
+            }"
+          >
+            {{ selectedTask.status }}
+          </span>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Assigné à</p>
+          <p class="font-medium text-gray-800">{{ selectedTask.assignee }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Date limite</p>
+          <p class="font-medium text-gray-800">{{ selectedTask.deadline }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Créé le</p>
+          <p class="font-medium text-gray-800">{{ selectedTask.createdAt }}</p>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <p class="text-sm text-gray-500 mb-1">Description</p>
+        <p class="text-gray-800 text-sm leading-relaxed">
+          {{ selectedTask.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+}
