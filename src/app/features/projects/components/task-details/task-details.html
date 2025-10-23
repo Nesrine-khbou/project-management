@@ -1,0 +1,81 @@
+@if (showModal && task) {
+  <div
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm"
+    (click)="closeModal()"
+  >
+    <div
+      class="bg-white rounded-2xl p-6 max-w-lg w-full shadow-xl relative animate-fade-in"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Close Button -->
+      <button
+        class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl"
+        (click)="closeModal()"
+      >
+        ✕
+      </button>
+
+      <!-- Header -->
+      <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-3">
+        {{ task.title }}
+      </h2>
+
+      <!-- Progress Bar -->
+      <div class="mb-6">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm font-medium text-gray-700">Progression</span>
+          <span class="text-sm font-semibold text-gray-800">{{ task.progress }}</span>
+        </div>
+
+        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+          <div
+            class="h-3 rounded-full shadow-inner transition-all duration-500 ease-in-out"
+            [ngClass]="getProgressColor(task.progress)"
+            [style.width]="task.progress"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Task Details Grid -->
+      <div class="grid grid-cols-2 gap-4 mb-5">
+        <div>
+          <p class="text-sm text-gray-500">Priorité</p>
+          <p class="font-medium text-gray-800">{{ task.priority }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Statut</p>
+          <span
+            class="inline-block mt-1 px-3 py-1 text-xs font-semibold rounded-full"
+            [ngClass]="{
+              'bg-red-100 text-red-700': task.status === 'En attente',
+              'bg-yellow-100 text-yellow-700': task.status === 'En cours',
+              'bg-green-100 text-green-700': task.status === 'Terminé'
+            }"
+          >
+            {{ task.status }}
+          </span>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Assigné à</p>
+          <p class="font-medium text-gray-800">{{ task.assignee }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Date limite</p>
+          <p class="font-medium text-gray-800">{{ task.deadline }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Créé le</p>
+          <p class="font-medium text-gray-800">{{ task.createdAt }}</p>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <p class="text-sm text-gray-500 mb-1">Description</p>
+        <p class="text-gray-800 text-sm leading-relaxed">
+          {{ task.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+}

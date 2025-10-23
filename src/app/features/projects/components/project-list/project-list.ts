@@ -69,12 +69,12 @@ export class ProjectList {
         {
           title: 'Authentification',
           priority: 'Moyenne',
-          status: 'En cours',
+          status: 'Terminé',
           description: 'Mise en place du système de connexion et inscription.',
           assignee: 'Amina',
           deadline: '2025-10-25',
           createdAt: '2025-10-02',
-          progress: '60%'
+          progress: '100%'
         },
         {
           title: 'Notifications',

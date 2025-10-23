@@ -1,10 +1,11 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TaskDetails } from '../task-details/task-details';
 
 @Component({
   selector: 'app-task-list',
-  imports: [NgClass, FormsModule],
+  imports: [NgClass, FormsModule,TaskDetails],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css'
 })
@@ -33,17 +34,6 @@ export class TaskList {
     this.showModal = false;
     this.selectedTask = null;
   }
-
-  getProgressColor(progress: string): string {
-  const value = parseInt(progress.replace('%', ''), 10);
-  if (value <= 30) {
-    return 'bg-gray-50';
-  } else if (value <= 70) {
-    return 'bg-yellow-100';
-  } else {
-    return 'bg-green-100';
-  }
-}
 
 
 }

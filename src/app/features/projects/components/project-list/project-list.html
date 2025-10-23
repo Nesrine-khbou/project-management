@@ -55,8 +55,8 @@
             class="h-2 rounded-full transition-all duration-500 ease-in-out"
             [ngClass]="{
               'bg-red-300': getProjectProgress(project) < 40,
-              'bg-yellow-400': getProjectProgress(project) >= 40 && getProjectProgress(project) < 80,
-              'bg-green-500': getProjectProgress(project) >= 80
+              'bg-yellow-200': getProjectProgress(project) >= 40 && getProjectProgress(project) < 80,
+              'bg-green-100': getProjectProgress(project) >= 80
             }"
             [style.width.%]="getProjectProgress(project)"
           ></div>
