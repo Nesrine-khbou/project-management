@@ -2,10 +2,11 @@ import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TaskDetails } from '../task-details/task-details';
+import { PriorityIndicatorPipe } from '../../../../priority-indicator-pipe';
 
 @Component({
   selector: 'app-task-list',
-  imports: [NgClass, FormsModule,TaskDetails],
+  imports: [NgClass, FormsModule,TaskDetails, PriorityIndicatorPipe],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css'
 })
