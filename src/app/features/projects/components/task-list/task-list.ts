@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TaskDetails } from '../task-details/task-details';
 import { PriorityIndicatorPipe } from '../../../../priority-indicator-pipe';
+import { Task } from '../../../../types';
 
 @Component({
   selector: 'app-task-list',
@@ -11,12 +12,12 @@ import { PriorityIndicatorPipe } from '../../../../priority-indicator-pipe';
   styleUrl: './task-list.css'
 })
 export class TaskList {
-  @Input() tasks: any[] = [];
+  @Input() tasks: Task[] = [];
   taskSearch: string = '';
   taskStatusFilter: string = '';
 
   showModal: boolean = false;
-  selectedTask: any = null;
+  selectedTask: Task | null = null;
 
   get filteredTasks() {
     return this.tasks.filter(task => {
@@ -26,7 +27,7 @@ export class TaskList {
     });
   }
 
-  openDetails(task: any) {
+  openDetails(task: Task) {
     this.selectedTask = task;
     this.showModal = true;
   }

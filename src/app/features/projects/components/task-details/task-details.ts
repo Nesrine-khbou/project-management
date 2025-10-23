@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { Task } from '../../../../types';
 
 @Component({
   selector: 'app-task-details',
@@ -8,7 +9,7 @@ import { NgClass } from '@angular/common';
   templateUrl: './task-details.html'
 })
 export class TaskDetails {
-  @Input() task: any = null;
+  @Input() task: Task | null = null;
   @Input() showModal: boolean = false;
   @Output() close = new EventEmitter<void>();
 

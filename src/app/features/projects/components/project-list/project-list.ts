@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TaskList } from "../task-list/task-list";
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Project, Task } from '../../../../types';
 
 @Component({
   selector: 'app-project-list',
@@ -13,7 +14,7 @@ export class ProjectList {
   searchTerm: string = '';
   statusFilter: string = '';
 
-  projects = [
+  projects : Project[] = [
     {
       name: 'Refonte du site e-commerce',
       description: 'Amélioration de l’interface et ajout de nouvelles fonctionnalités.',
@@ -90,7 +91,7 @@ export class ProjectList {
     }
   ];
 
-  get filteredProjects() {
+  get filteredProjects() : Project[] {
     return this.projects.filter(project => {
       const matchSearch =
         project.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
@@ -104,12 +105,12 @@ export class ProjectList {
   }
 
 
-  getProjectProgress(project: any): number {
+  getProjectProgress(project: Project): number {
   const totalTasks = project.tasks.length;
   if (totalTasks === 0) return 0;
 
   const completedTasks = project.tasks.filter(
-    (task: any) => task.status === 'Terminé'
+    (task: Task) => task.status === 'Terminé'
   ).length;
 
   return Math.round((completedTasks / totalTasks) * 100);
