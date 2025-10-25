@@ -4,13 +4,17 @@
     type="text"
     placeholder="Rechercher un projet..."
     [(ngModel)]="searchTerm"
-    class="border rounded-lg px-3 py-2 w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+    class="border rounded-lg px-3 py-2 w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-400
+           bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700
+           text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
   />
 
   <!-- Filter by status -->
   <select
     [(ngModel)]="statusFilter"
-    class="border rounded-lg px-3 py-2 w-full md:w-1/4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+    class="border rounded-lg px-3 py-2 w-full md:w-1/4 focus:outline-none focus:ring-2 focus:ring-blue-400
+           bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700
+           text-gray-900 dark:text-gray-100"
   >
     <option value="">Tous les statuts</option>
     <option value="En cours">En cours</option>
@@ -23,53 +27,53 @@
 <div class="space-y-6">
   @if (filteredProjects.length > 0) {
     @for (project of filteredProjects; track project.name) {
-      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all duration-300">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300"
+      >
         <!-- Project Header -->
         <div class="flex items-start justify-between mb-4">
           <div>
-            <h2 class="text-xl font-semibold text-gray-900 mb-1">{{ project.name }}</h2>
-            <p class="text-gray-600 text-sm leading-relaxed">{{ project.description }}</p>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-1">{{ project.name }}</h2>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{{ project.description }}</p>
           </div>
           <span
             class="px-3 py-1 text-xs font-medium rounded-full"
             [ngClass]="{
-              'bg-green-100 text-green-700': project.status === 'Terminé',
-              'bg-yellow-100 text-yellow-700': project.status === 'En cours',
-              'bg-gray-100 text-gray-700': project.status !== 'Terminé' && project.status !== 'En cours'
+              'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200': project.status === 'Terminé',
+              'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200': project.status === 'En cours',
+              'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300': project.status !== 'Terminé' && project.status !== 'En cours'
             }"
           >
             {{ project.status }}
           </span>
         </div>
 
+        <!-- Project Progress -->
+        <div class="mb-4">
+          <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
+            <span><strong>Progression</strong></span>
+            <span>{{ getProjectProgress(project) }}%</span>
+          </div>
 
-      <!-- Project Progress -->
-      <div class="mb-4">
-        <div class="flex justify-between text-sm text-gray-600 mb-1">
-          <span> <strong>Progression</strong> </span>
-          <span>{{ getProjectProgress(project) }}%</span>
+          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+            <div
+              class="h-2 rounded-full transition-all duration-500 ease-in-out"
+              [ngClass]="{
+                'bg-red-300 dark:bg-red-700': getProjectProgress(project) < 40,
+                'bg-yellow-200 dark:bg-yellow-600': getProjectProgress(project) >= 40 && getProjectProgress(project) < 80,
+                'bg-green-100 dark:bg-green-700': getProjectProgress(project) >= 80
+              }"
+              [style.width.%]="getProjectProgress(project)"
+            ></div>
+          </div>
         </div>
-
-        <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-          <div
-            class="h-2 rounded-full transition-all duration-500 ease-in-out"
-            [ngClass]="{
-              'bg-red-300': getProjectProgress(project) < 40,
-              'bg-yellow-200': getProjectProgress(project) >= 40 && getProjectProgress(project) < 80,
-              'bg-green-100': getProjectProgress(project) >= 80
-            }"
-            [style.width.%]="getProjectProgress(project)"
-          ></div>
-        </div>
-      </div>
-
 
         <!-- Task List -->
         <app-task-list [tasks]="project.tasks"></app-task-list>
       </div>
     }
   } @else {
-    <p class="text-gray-500 text-center py-6 italic">
+    <p class="text-gray-500 dark:text-gray-400 text-center py-6 italic">
       Aucun projet trouvé.
     </p>
   }

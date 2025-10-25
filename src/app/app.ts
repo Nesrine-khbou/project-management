@@ -9,4 +9,14 @@ import { ProjectList } from "./features/projects/components/project-list/project
 })
 export class App {
   protected readonly title = signal('mon-projet');
+    isDarkMode = false;
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    if (this.isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
 }

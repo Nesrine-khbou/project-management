@@ -1,3 +1,26 @@
-<div class="p-6 max-w-4xl mx-auto">
-  <app-project-list></app-project-list>
+<div class="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+  
+  <!-- Dark mode toggle -->
+  <div class="p-4 flex justify-end">
+    <button
+      (click)="toggleDarkMode()"
+      class="relative w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full transition-colors duration-300 focus:outline-none shadow-inner"
+    >
+      <span
+        class="absolute top-1 left-1 w-6 h-6 bg-white dark:bg-gray-200 rounded-full shadow-md transform transition-transform duration-300"
+        [class.translate-x-6]="isDarkMode"
+      ></span>
+    </button>
+
+    <!-- Label next to the switch -->
+    <span class="ml-3 text-gray-800 dark:text-gray-200 font-medium">
+      {{ isDarkMode ? 'Mode sombre' : 'Mode clair' }}
+    </span>
+  </div>
+
+
+  <!-- Main content -->
+  <div class="p-6 max-w-4xl mx-auto">
+    <app-project-list></app-project-list>
+  </div>
 </div>
