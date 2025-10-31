@@ -3,16 +3,19 @@ import { TaskList } from "../task-list/task-list";
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Project, Task } from '../../../../types';
+import { AddProject } from "../../../../add-project/add-project";
 
 @Component({
   selector: 'app-project-list',
-  imports: [NgClass, TaskList, FormsModule],
+  imports: [NgClass, TaskList, FormsModule, AddProject],
   templateUrl: './project-list.html',
   styleUrl: './project-list.css'
 })
 export class ProjectList {
   searchTerm: string = '';
   statusFilter: string = '';
+  showAddForm = false;
+
 
   projects : Project[] = [
     {
@@ -90,6 +93,16 @@ export class ProjectList {
       ]
     }
   ];
+
+ 
+  toggleAddForm() {
+    this.showAddForm = !this.showAddForm;
+  }
+
+  addProject(newProject: Project) {
+    this.projects.push({ ...newProject, tasks: [] });
+    this.showAddForm = false;
+  }
 
   get filteredProjects() : Project[] {
     return this.projects.filter(project => {
