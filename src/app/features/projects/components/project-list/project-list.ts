@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http'; // ✅ both here
-import { NgClass } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http'; 
 import { FormsModule } from '@angular/forms';
 import { Project, Task } from '../../../../types';
-import { TaskList } from "../task-list/task-list";
 import { AddProject } from "../../../../add-project/add-project";
+import { ProjectCard } from "../../../../project-card/project-card";
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [NgClass, TaskList, FormsModule, AddProject, HttpClientModule],
+  imports: [FormsModule, AddProject, HttpClientModule, ProjectCard],
   templateUrl: './project-list.html',
   styleUrls: ['./project-list.css']
 })
