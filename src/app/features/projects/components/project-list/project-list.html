@@ -48,7 +48,8 @@
   @if (filteredProjects.length > 0) {
 
     @for (project of filteredProjects; track project.name) {
-        <app-project-card [project]="project"></app-project-card>
+        <app-project-card [project]="project"  (taskAdded)="addTaskToProject($event)"
+></app-project-card>
       }
     
   } @else {

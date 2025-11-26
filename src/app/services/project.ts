@@ -22,12 +22,12 @@ export class ProjectService {
   }
 
   // Update a project
-  updateProject(id: number, project: Project): Observable<Project> {
+  updateProject(id: string, project: Project): Observable<Project> {
     return this.http.put<Project>(`${this.apiUrl}/${id}`, project);
   }
 
   // Delete a project
-  deleteProject(id: number): Observable<void> {
+  deleteProject(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

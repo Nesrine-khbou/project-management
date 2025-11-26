@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http'; 
 import { FormsModule } from '@angular/forms';
 import { Project, Task } from '../../../../types';
 import { AddProject } from "../../../../add-project/add-project";
 import { ProjectCard } from "../../../../project-card/project-card";
+import { ProjectService } from '../../../../services/project';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [FormsModule, AddProject, HttpClientModule, ProjectCard],
+  imports: [FormsModule, AddProject, ProjectCard],
   templateUrl: './project-list.html',
   styleUrls: ['./project-list.css']
 })
@@ -18,14 +18,14 @@ export class ProjectList implements OnInit {
   showAddForm = false;
   projects: Project[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private projectService: ProjectService) {} // Use ProjectService instead of HttpClient
 
   ngOnInit() {
     this.loadProjects();
   }
 
   loadProjects() {
-    this.http.get<Project[]>('http://localhost:5000/projects')
+    this.projectService.getProjects() // Use service method
       .subscribe((data) => this.projects = data);
   }
 
@@ -34,11 +34,34 @@ export class ProjectList implements OnInit {
   }
 
   addProject(newProject: Project) {
-    this.http.post<Project>('http://localhost:5000/projects', { ...newProject, tasks: [] })
+    this.projectService.addProject(newProject) // Use service method
       .subscribe((createdProject) => {
         this.projects.push(createdProject);
         this.showAddForm = false;
       });
+  }
+
+  addTaskToProject(event: {projectId: string, task: Task}) {
+    const project = this.projects.find(p => p.id === event.projectId);
+    if (project && project.id) {
+      const newTask = {
+        ...event.task,
+        id: project.tasks.length + 1
+      };
+      
+      const updatedProject = {
+        ...project,
+        tasks: [...project.tasks, newTask]
+      };
+
+      this.projectService.updateProject(project.id, updatedProject)
+        .subscribe(() => {
+          const index = this.projects.findIndex(p => p.id === event.projectId);
+          if (index !== -1) {
+            this.projects[index] = updatedProject;
+          }
+        });
+    }
   }
 
   get filteredProjects(): Project[] {

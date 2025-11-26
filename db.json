@@ -83,11 +83,23 @@
       ]
     },
     {
-      "id": "ba9a",
+      "id": "0ab8",
       "name": "test",
-      "description": "test",
+      "description": "aaaa",
       "status": "En attente",
-      "tasks": []
+      "tasks": [
+        {
+          "title": "aaa",
+          "description": "aaa",
+          "priority": "Haute",
+          "status": "En cours",
+          "assignee": "nesrine",
+          "deadline": "2025-11-27",
+          "createdAt": "2025-11-26",
+          "progress": "0%",
+          "id": 1
+        }
+      ]
     }
   ]
 }
