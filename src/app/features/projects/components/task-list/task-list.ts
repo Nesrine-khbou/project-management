@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TaskDetails } from '../task-details/task-details';
 import { PriorityIndicatorPipe } from '../../../../priority-indicator-pipe';
@@ -13,6 +13,9 @@ import { Task } from '../../../../types';
 })
 export class TaskList {
   @Input() tasks: Task[] = [];
+  @Input() showAddTaskButton: boolean = true;
+  @Output() addTaskClick = new EventEmitter<void>();
+  
   taskSearch: string = '';
   taskStatusFilter: string = '';
 

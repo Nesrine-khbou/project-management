@@ -81,25 +81,7 @@
           "progress": "0%"
         }
       ]
-    },
-    {
-      "id": "0ab8",
-      "name": "test",
-      "description": "aaaa",
-      "status": "En attente",
-      "tasks": [
-        {
-          "title": "aaa",
-          "description": "aaa",
-          "priority": "Haute",
-          "status": "En cours",
-          "assignee": "nesrine",
-          "deadline": "2025-11-27",
-          "createdAt": "2025-11-26",
-          "progress": "0%",
-          "id": 1
-        }
-      ]
     }
+    
   ]
 }
