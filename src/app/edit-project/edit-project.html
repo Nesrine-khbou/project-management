@@ -1,0 +1,88 @@
+<!-- Modal Overlay -->
+<div
+  class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+>
+  <!-- Modal Content -->
+  <div
+    class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700
+           rounded-2xl p-6 shadow-2xl w-full max-w-lg mx-4 animate-fade-in"
+  >
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        Modifier le projet
+      </h3>
+      <button
+        (click)="cancel.emit()"
+        class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-xl font-bold"
+      >
+        &times;
+      </button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #projectForm="ngForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Nom du projet
+        </label>
+        <input
+          type="text"
+          required
+          [(ngModel)]="editedProject.name"
+          name="name"
+          class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
+                 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Description
+        </label>
+        <textarea
+          required
+          [(ngModel)]="editedProject.description"
+          name="description"
+          class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
+                 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
+        ></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Statut
+        </label>
+        <select
+          [(ngModel)]="editedProject.status"
+          name="status"
+          required
+          class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
+                 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
+        >
+          <option value="">Choisir un statut</option>
+          <option value="En cours">En cours</option>
+          <option value="En attente">En attente</option>
+          <option value="Terminé">Terminé</option>
+        </select>
+      </div>
+
+      <div class="flex justify-end gap-3 mt-4">
+        <button
+          type="button"
+          (click)="cancel.emit()"
+          class="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-lg
+                 hover:bg-gray-400 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200"
+        >
+          Annuler
+        </button>
+
+        <button
+          type="submit"
+          class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition"
+        >
+          Enregistrer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

@@ -64,6 +64,18 @@ export class ProjectList implements OnInit {
     }
   }
 
+  updateProject(updatedProject: Project) {
+    if (updatedProject.id) {
+      this.projectService.updateProject(updatedProject.id, updatedProject)
+        .subscribe(() => {
+          const index = this.projects.findIndex(p => p.id === updatedProject.id);
+          if (index !== -1) {
+            this.projects[index] = updatedProject;
+          }
+        });
+    }
+  }
+
   get filteredProjects(): Project[] {
     return this.projects.filter(project => {
       const matchSearch =

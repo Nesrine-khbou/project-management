@@ -3,8 +3,8 @@
     {
       "id": "1",
       "name": "Refonte du site e-commerce",
-      "description": "Amélioration de l’interface et ajout de nouvelles fonctionnalités.",
-      "status": "En cours",
+      "description": "Amélioration de l’interface et ajout de nouvelles fonctionnalités. ",
+      "status": "Terminé",
       "tasks": [
         {
           "id": 1,
@@ -82,6 +82,5 @@
         }
       ]
     }
-    
   ]
 }
