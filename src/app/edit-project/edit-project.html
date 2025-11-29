@@ -24,14 +24,28 @@
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Nom du projet
         </label>
-        <input
-          type="text"
-          required
-          [(ngModel)]="editedProject.name"
-          name="name"
-          class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
-                 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
-        />
+<input
+  type="text"
+  required
+  minlength="4"
+  [(ngModel)]="editedProject.name"
+  name="name"
+  #nameCtrl="ngModel"
+  [ngClass]="{
+    'border-red-500 ring-1 ring-red-500 focus:ring-red-500': nameCtrl.invalid && nameCtrl.touched,
+    'border-gray-300 dark:border-gray-700': !(nameCtrl.invalid && nameCtrl.touched)
+  }"
+  class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
+         text-gray-900 dark:text-gray-100 transition-all"
+/>
+
+
+        @if (nameCtrl.invalid && nameCtrl.touched) {
+          <div class="text-red-600 text-sm mt-1">
+            Le nom du projet doit contenir au moins 4 caractères.
+          </div>
+        }
+
       </div>
 
       <div>
@@ -77,10 +91,13 @@
 
         <button
           type="submit"
-          class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition"
+          [disabled]="projectForm.invalid"
+          class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition
+                disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Enregistrer
         </button>
+
       </div>
     </form>
   </div>

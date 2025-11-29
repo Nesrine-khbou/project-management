@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Project } from '../types';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-project',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './edit-project.html',
   styleUrl: './edit-project.css'
 })
