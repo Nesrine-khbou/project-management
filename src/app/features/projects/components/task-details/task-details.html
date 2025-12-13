@@ -5,7 +5,7 @@ the progress bar in the task details doesn't have an equivalent class for dark m
     (click)="closeModal()"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-lg w-full shadow-xl relative animate-fade-in border border-gray-200 dark:border-gray-700"
+      class="bg-white dark:bg-gray-800 rounded p-6 max-w-lg w-full relative border border-gray-200 dark:border-gray-700"
       (click)="$event.stopPropagation()"
     >
       <!-- Close Button -->
@@ -28,9 +28,9 @@ the progress bar in the task details doesn't have an equivalent class for dark m
           <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">{{ task.progress }}</span>
         </div>
 
-        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded h-3 overflow-hidden">
           <div
-            class="h-3 rounded-full shadow-inner transition-all duration-500 ease-in-out"
+            class="h-3 rounded transition-all duration-300"
             [ngClass]="getProgressColor(task.progress)"
             [style.width]="task.progress"
           ></div>
@@ -46,7 +46,7 @@ the progress bar in the task details doesn't have an equivalent class for dark m
         <div>
           <p class="text-sm text-gray-500 dark:text-gray-400">Statut</p>
           <span
-            class="inline-block mt-1 px-3 py-1 text-xs font-semibold rounded-full"
+            class="inline-block mt-1 px-3 py-1 text-xs font-medium rounded"
             [ngClass]="{
               'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200': task.status === 'En attente',
               'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200': task.status === 'En cours',

@@ -5,7 +5,7 @@
   <!-- Modal Content -->
   <div
     class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700
-           rounded-2xl p-6 shadow-2xl w-full max-w-lg mx-4 animate-fade-in"
+           rounded p-6 w-full max-w-lg mx-4"
   >
     <div class="flex justify-between items-center mb-4">
       <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -35,8 +35,8 @@
     'border-red-500 ring-1 ring-red-500 focus:ring-red-500': nameCtrl.invalid && nameCtrl.touched,
     'border-gray-300 dark:border-gray-700': !(nameCtrl.invalid && nameCtrl.touched)
   }"
-  class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
-         text-gray-900 dark:text-gray-100 transition-all"
+  class="border rounded px-3 py-2 w-full bg-white dark:bg-gray-800
+         text-gray-900 dark:text-gray-100 transition-colors duration-200"
 />
 
 
@@ -56,7 +56,7 @@
           required
           [(ngModel)]="editedProject.description"
           name="description"
-          class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
+          class="border rounded px-3 py-2 w-full bg-white dark:bg-gray-800
                  border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
         ></textarea>
       </div>
@@ -69,7 +69,7 @@
           [(ngModel)]="editedProject.status"
           name="status"
           required
-          class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
+          class="border rounded px-3 py-2 w-full bg-white dark:bg-gray-800
                  border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
         >
           <option value="">Choisir un statut</option>
@@ -83,8 +83,8 @@
         <button
           type="button"
           (click)="cancel.emit()"
-          class="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-lg
-                 hover:bg-gray-400 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200"
+          class="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded
+                 hover:bg-gray-400 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 transition-colors duration-200"
         >
           Annuler
         </button>
@@ -92,7 +92,7 @@
         <button
           type="submit"
           [disabled]="projectForm.invalid"
-          class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition
+          class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded transition-colors duration-200
                 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Enregistrer
