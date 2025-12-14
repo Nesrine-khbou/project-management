@@ -1,79 +1,94 @@
-the progress bar in the task details doesn't have an equivalent class for dark mode
 @if (showModal && task) {
   <div
-    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm"
+    class="fixed inset-0 z-50 grid place-items-center
+           bg-black/50 backdrop-blur-sm p-4"
     (click)="closeModal()"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded p-6 max-w-lg w-full relative border border-gray-200 dark:border-gray-700"
+      class="relative w-full max-w-lg rounded-2xl p-6
+             bg-white/80 backdrop-blur border border-white/60 ring-1 ring-slate-200/60
+             shadow-xl
+             dark:bg-slate-900/70 dark:border-slate-700/40 dark:ring-slate-700/50"
       (click)="$event.stopPropagation()"
     >
-      <!-- Close Button -->
+      <!-- Close -->
       <button
-        class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100 text-xl"
+        type="button"
+        class="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full
+               text-slate-500 hover:text-slate-700 hover:bg-slate-900/5
+               dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/10 transition"
         (click)="closeModal()"
+        aria-label="Close"
       >
         ✕
       </button>
 
       <!-- Header -->
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 border-b pb-3 border-gray-300 dark:border-gray-700">
+      <h2
+        class="text-2xl font-extrabold text-slate-900 dark:text-white
+               pb-3 border-b border-slate-200/70 dark:border-slate-700/60"
+      >
         {{ task.title }}
       </h2>
 
-      <!-- Progress Bar -->
-      <div class="mb-6">
+      <!-- Progress -->
+      <div class="mt-5">
         <div class="flex justify-between items-center mb-2">
-          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Progression</span>
-          <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">{{ task.progress }}</span>
+          <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">Progression</span>
+          <span class="text-sm font-bold text-slate-900 dark:text-white">{{ task.progress }}</span>
         </div>
 
-        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded h-3 overflow-hidden">
+        <div class="w-full rounded-full h-3 overflow-hidden
+                    bg-slate-200/70 dark:bg-slate-700/50 ring-1 ring-slate-200/60 dark:ring-slate-700/60">
           <div
-            class="h-3 rounded transition-all duration-300"
-            [ngClass]="getProgressColor(task.progress)"
+            class="h-3 rounded-full transition-all duration-300"
             [style.width]="task.progress"
+            [ngClass]="getProgressColor(task.progress)"
           ></div>
         </div>
       </div>
 
-      <!-- Task Details Grid -->
-      <div class="grid grid-cols-2 gap-4 mb-5">
-        <div>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Priorité</p>
-          <p class="font-medium text-gray-800 dark:text-gray-200">{{ task.priority }}</p>
+      <!-- Details -->
+      <div class="mt-6 grid grid-cols-2 gap-4">
+        <div class="rounded-xl p-3 bg-white/50 ring-1 ring-slate-200/60 dark:bg-slate-900/40 dark:ring-slate-700/50">
+          <p class="text-xs text-slate-500 dark:text-slate-300">Priorité</p>
+          <p class="font-semibold text-slate-900 dark:text-white">{{ task.priority }}</p>
         </div>
-        <div>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Statut</p>
+
+        <div class="rounded-xl p-3 bg-white/50 ring-1 ring-slate-200/60 dark:bg-slate-900/40 dark:ring-slate-700/50">
+          <p class="text-xs text-slate-500 dark:text-slate-300">Statut</p>
           <span
-            class="inline-block mt-1 px-3 py-1 text-xs font-medium rounded"
+            class="inline-flex mt-1 px-3 py-1 text-xs font-semibold rounded-full border"
             [ngClass]="{
-              'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200': task.status === 'En attente',
-              'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200': task.status === 'En cours',
-              'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200': task.status === 'Terminé'
+              'bg-rose-500/10 text-rose-700 border-rose-500/20 dark:bg-rose-400/10 dark:text-rose-200 dark:border-rose-400/20': task.status === 'En attente',
+              'bg-amber-500/10 text-amber-700 border-amber-500/20 dark:bg-amber-400/10 dark:text-amber-200 dark:border-amber-400/20': task.status === 'En cours',
+              'bg-emerald-500/10 text-emerald-700 border-emerald-500/20 dark:bg-emerald-400/10 dark:text-emerald-200 dark:border-emerald-400/20': task.status === 'Terminé'
             }"
           >
             {{ task.status }}
           </span>
         </div>
-        <div>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Assigné à</p>
-          <p class="font-medium text-gray-800 dark:text-gray-200">{{ task.assignee }}</p>
+
+        <div class="rounded-xl p-3 bg-white/50 ring-1 ring-slate-200/60 dark:bg-slate-900/40 dark:ring-slate-700/50">
+          <p class="text-xs text-slate-500 dark:text-slate-300">Assigné à</p>
+          <p class="font-semibold text-slate-900 dark:text-white">{{ task.assignee }}</p>
         </div>
-        <div>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Date limite</p>
-          <p class="font-medium text-gray-800 dark:text-gray-200">{{ task.deadline }}</p>
+
+        <div class="rounded-xl p-3 bg-white/50 ring-1 ring-slate-200/60 dark:bg-slate-900/40 dark:ring-slate-700/50">
+          <p class="text-xs text-slate-500 dark:text-slate-300">Date limite</p>
+          <p class="font-semibold text-slate-900 dark:text-white">{{ task.deadline }}</p>
         </div>
-        <div>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Créé le</p>
-          <p class="font-medium text-gray-800 dark:text-gray-200">{{ task.createdAt }}</p>
+
+        <div class="rounded-xl p-3 bg-white/50 ring-1 ring-slate-200/60 dark:bg-slate-900/40 dark:ring-slate-700/50 col-span-2">
+          <p class="text-xs text-slate-500 dark:text-slate-300">Créé le</p>
+          <p class="font-semibold text-slate-900 dark:text-white">{{ task.createdAt }}</p>
         </div>
       </div>
 
       <!-- Description -->
-      <div>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Description</p>
-        <p class="text-gray-800 dark:text-gray-200 text-sm leading-relaxed">
+      <div class="mt-5">
+        <p class="text-xs text-slate-500 dark:text-slate-300 mb-1">Description</p>
+        <p class="text-sm leading-relaxed text-slate-900 dark:text-slate-100">
           {{ task.description }}
         </p>
       </div>

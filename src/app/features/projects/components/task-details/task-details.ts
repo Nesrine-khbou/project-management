@@ -13,13 +13,14 @@ export class TaskDetails {
   @Input() showModal: boolean = false;
   @Output() close = new EventEmitter<void>();
 
-  getProgressColor(progress: string): string {
-    const value = parseInt(progress.replace('%', ''), 10);
-    if (value <= 10) return 'bg-gray-50';
-    if (value <= 30) return 'bg-red-300';
-    if (value <= 80) return 'bg-yellow-200';
-    return 'bg-green-100';
+  getProgressColor(progress: string) {
+    const value = parseInt(progress, 10) || 0;
+  
+    if (value < 40) return 'bg-gradient-to-r from-rose-500 to-fuchsia-500';
+    if (value < 80) return 'bg-gradient-to-r from-amber-500 to-orange-500';
+    return 'bg-gradient-to-r from-emerald-500 to-cyan-500';
   }
+  
 
   closeModal() {
     this.close.emit();
