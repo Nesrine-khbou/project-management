@@ -1,0 +1,5 @@
+/* Dashboard specific styles */
+:host {
+  display: block;
+  width: 100%;
+}

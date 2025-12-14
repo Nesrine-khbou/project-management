@@ -1,26 +1,54 @@
 <div class="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
   
-  <!-- Dark mode toggle -->
-  <div class="p-4 flex justify-end">
-    <button
-      (click)="toggleDarkMode()"
-      class="relative w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full transition-colors duration-300 focus:outline-none shadow-inner"
-    >
-      <span
-        class="absolute top-1 left-1 w-6 h-6 bg-white dark:bg-gray-200 rounded-full shadow-md transform transition-transform duration-300"
-        [class.translate-x-6]="isDarkMode"
-      ></span>
-    </button>
+  <!-- Navigation Bar -->
+  <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo/Title -->
+        <div class="flex items-center">
+          <h1 class="text-xl font-bold text-gray-900 dark:text-gray-100">
+            Gestionnaire de Projets
+          </h1>
+        </div>
 
-    <!-- Label next to the switch -->
-    <span class="ml-3 text-gray-800 dark:text-gray-200 font-medium">
-      {{ isDarkMode ? 'Mode sombre' : 'Mode clair' }}
-    </span>
-  </div>
-
+        <!-- Navigation Links -->
+        <div class="flex items-center space-x-4">
+          <a
+            routerLink="/dashboard"
+            routerLinkActive="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200"
+            [routerLinkActiveOptions]="{ exact: false }"
+            class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 
+                   hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+            Tableau de bord
+          </a>
+          <a
+            routerLink="/projects"
+            routerLinkActive="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200"
+            class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 
+                   hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+            Projets
+          </a>
+          
+          <!-- Dark mode toggle -->
+          <div class="flex items-center ml-4 pl-4 border-l border-gray-200 dark:border-gray-700">
+            <button
+              (click)="toggleDarkMode()"
+              class="relative w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full transition-colors duration-300 focus:outline-none shadow-inner"
+              title="{{ isDarkMode ? 'Mode sombre' : 'Mode clair' }}"
+            >
+              <span
+                class="absolute top-1 left-1 w-6 h-6 bg-white dark:bg-gray-200 rounded-full shadow-md transform transition-transform duration-300"
+                [class.translate-x-6]="isDarkMode"
+              ></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
 
   <!-- Main content -->
-  <div class="p-6 max-w-4xl mx-auto">
-    <app-project-list></app-project-list>
-  </div>
+  <router-outlet></router-outlet>
 </div>
