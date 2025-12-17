@@ -5,10 +5,12 @@ import {
   QueryList,
   ViewChildren,
   ViewChild,
-  ElementRef
+  ElementRef,
+  inject,
+  PLATFORM_ID
 } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ProjectService } from '../../../../services/project';
@@ -23,6 +25,8 @@ import { Project } from '../../../../types';
 })
 export class Dashboard implements OnInit, OnDestroy {
   projects: Project[] = [];
+  private platformId = inject(PLATFORM_ID);
+  isBrowser = false;
 
   @ViewChildren(BaseChartDirective) charts!: QueryList<BaseChartDirective>;
   private themeObserver?: MutationObserver;
@@ -138,11 +142,15 @@ export class Dashboard implements OnInit, OnDestroy {
 
   public doughnutChartOptions: ChartOptions<'doughnut'> = this.makeDoughnutOptions();
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   ngOnInit() {
-    this.setupThemeWatcher();     // ✅ auto-update when dark mode toggles
-    this.applyThemeToCharts();    // ✅ initial styling
+    if (this.isBrowser) {
+      this.setupThemeWatcher();     // ✅ auto-update when dark mode toggles
+      this.applyThemeToCharts();    // ✅ initial styling
+    }
     this.loadProjects();
   }
 
@@ -221,6 +229,7 @@ export class Dashboard implements OnInit, OnDestroy {
   // =========================
 
   private isDark(): boolean {
+    if (typeof document === 'undefined') return false;
     return document.documentElement.classList.contains('dark');
   }
 
