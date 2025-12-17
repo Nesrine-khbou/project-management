@@ -74,15 +74,19 @@
     ></app-edit-project>
   }
 
-  @if (showAddTaskForm) {
+  @if (showAddTaskForm || showEditTaskForm) {
     <app-add-task
+      [taskToEdit]="taskToEdit"
+      [isEditMode]="showEditTaskForm"
       (taskAdded)="addTask($event)"
-      (cancel)="toggleAddTaskForm()"
+      (taskUpdated)="updateTask($event)"
+      (cancel)="closeTaskForm()"
     ></app-add-task>
   }
 
   <app-task-list
     [tasks]="project.tasks"
     (addTaskClick)="toggleAddTaskForm()"
+    (editTaskClick)="openEditTaskForm($event)"
   ></app-task-list>
 </div>

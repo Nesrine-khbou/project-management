@@ -15,6 +15,7 @@ export class TaskList {
   @Input() tasks: Task[] = [];
   @Input() showAddTaskButton: boolean = true;
   @Output() addTaskClick = new EventEmitter<void>();
+  @Output() editTaskClick = new EventEmitter<Task>();
   
   taskSearch: string = '';
   taskStatusFilter: string = '';
@@ -40,5 +41,7 @@ export class TaskList {
     this.selectedTask = null;
   }
 
-
+  editTask(task: Task) {
+    this.editTaskClick.emit(task);
+  }
 }

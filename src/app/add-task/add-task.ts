@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Task } from '../types';
@@ -10,8 +10,11 @@ import { Task } from '../types';
   templateUrl: './add-task.html',
   styleUrl: './add-task.css'
 })
-export class AddTask implements OnInit {
+export class AddTask implements OnInit, OnChanges {
+  @Input() taskToEdit?: Task;
+  @Input() isEditMode: boolean = false;
   @Output() taskAdded = new EventEmitter<Task>();
+  @Output() taskUpdated = new EventEmitter<Task>();
   @Output() cancel = new EventEmitter<void>();
 
   taskForm!: FormGroup;
@@ -20,6 +23,12 @@ export class AddTask implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['taskToEdit'] && this.taskToEdit && this.taskForm) {
+      this.populateForm();
+    }
   }
 
   private initializeForm() {
@@ -31,6 +40,23 @@ export class AddTask implements OnInit {
       assignee: ['', [Validators.required, Validators.minLength(2)]],
       deadline: ['', Validators.required]
     });
+
+    if (this.taskToEdit) {
+      this.populateForm();
+    }
+  }
+
+  private populateForm() {
+    if (this.taskToEdit) {
+      this.taskForm.patchValue({
+        title: this.taskToEdit.title,
+        description: this.taskToEdit.description,
+        priority: this.taskToEdit.priority,
+        status: this.taskToEdit.status,
+        assignee: this.taskToEdit.assignee,
+        deadline: this.taskToEdit.deadline
+      });
+    }
   }
 
   onSubmit() {
@@ -39,14 +65,25 @@ export class AddTask implements OnInit {
     }
 
     const formValue = this.taskForm.value;
-    const taskToAdd: Task = {
-      ...formValue,
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString().split('T')[0],
-      progress: '0%'
-    };
-
-    this.taskAdded.emit(taskToAdd);
+    
+    if (this.isEditMode && this.taskToEdit) {
+      // Edit mode - update existing task
+      const updatedTask: Task = {
+        ...this.taskToEdit,
+        ...formValue
+      };
+      this.taskUpdated.emit(updatedTask);
+    } else {
+      // Add mode - create new task
+      const newTask: Task = {
+        ...formValue,
+        id: Date.now().toString(),
+        createdAt: new Date().toISOString().split('T')[0],
+        progress: '0%'
+      };
+      this.taskAdded.emit(newTask);
+    }
+    
     this.resetForm();
   }
 

@@ -100,6 +100,18 @@
           </span>
 
           <button
+            (click)="editTask(task)"
+            type="button"
+            class="px-3 py-1 text-xs font-semibold rounded-full
+                   bg-blue-600/10 text-blue-700 border border-blue-500/20
+                   hover:bg-blue-600/15
+                   dark:bg-blue-400/10 dark:text-blue-200 dark:border-blue-400/20
+                   transition"
+          >
+            ✏️ Modifier
+          </button>
+
+          <button
             (click)="openDetails(task)"
             type="button"
             class="px-3 py-1 text-xs font-semibold rounded-full

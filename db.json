@@ -45,7 +45,7 @@
       "id": "2",
       "name": "Application mobile RH",
       "description": "Développement d’une application pour gérer les congés.",
-      "status": "En cours",
+      "status": "Terminé",
       "tasks": [
         {
           "id": 1,
@@ -73,7 +73,7 @@
           "id": 3,
           "title": "Notifications",
           "priority": "Basse",
-          "status": "En attente",
+          "status": "Terminé",
           "description": "Envoi des notifications aux employés pour les demandes de congé.",
           "assignee": "Nour",
           "deadline": "2025-11-01",
@@ -86,16 +86,27 @@
       "id": "2c2b",
       "name": "test",
       "description": "test",
-      "status": "Terminé",
+      "status": "En cours",
       "tasks": [
         {
           "title": "task",
           "description": "task description",
-          "priority": "Moyenne",
-          "status": "En attente",
+          "priority": "Haute",
+          "status": "Terminé",
           "assignee": "nesrine",
           "deadline": "2025-12-18",
           "id": 1,
+          "createdAt": "2025-12-17",
+          "progress": "0%"
+        },
+        {
+          "title": "task 2",
+          "description": "task description ",
+          "priority": "Basse",
+          "status": "En cours",
+          "assignee": "Nour",
+          "deadline": "2025-12-26",
+          "id": 2,
           "createdAt": "2025-12-17",
           "progress": "0%"
         }

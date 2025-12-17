@@ -14,10 +14,13 @@ import { Project, Task } from '../types';
 export class ProjectCard {
   @Input() project!: Project;
   @Output() taskAdded = new EventEmitter<{projectId: string, task: Task}>();
+  @Output() taskUpdated = new EventEmitter<{projectId: string, task: Task}>();
   @Output() projectUpdated = new EventEmitter<Project>();
   
   showAddTaskForm = false;
+  showEditTaskForm = false;
   showEditProjectForm = false;
+  taskToEdit: Task | undefined;
 
   getProjectProgress(project: Project): number {
     const totalTasks = project.tasks.length;
@@ -29,10 +32,24 @@ export class ProjectCard {
 
   toggleAddTaskForm() {
     this.showAddTaskForm = !this.showAddTaskForm;
+    this.showEditTaskForm = false;
+    this.taskToEdit = undefined;
   }
 
   toggleEditProjectForm() {
     this.showEditProjectForm = !this.showEditProjectForm;
+  }
+
+  openEditTaskForm(task: Task) {
+    this.taskToEdit = task;
+    this.showEditTaskForm = true;
+    this.showAddTaskForm = false;
+  }
+
+  closeTaskForm() {
+    this.showAddTaskForm = false;
+    this.showEditTaskForm = false;
+    this.taskToEdit = undefined;
   }
 
   addTask(newTask: Task) {
@@ -40,7 +57,15 @@ export class ProjectCard {
       projectId: this.project.id!,
       task: newTask
     });
-    this.showAddTaskForm = false;
+    this.closeTaskForm();
+  }
+
+  updateTask(updatedTask: Task) {
+    this.taskUpdated.emit({
+      projectId: this.project.id!,
+      task: updatedTask
+    });
+    this.closeTaskForm();
   }
 
   updateProject(updatedProject: Project) {

@@ -64,6 +64,28 @@ export class ProjectList implements OnInit {
     }
   }
 
+  updateTaskInProject(event: {projectId: string, task: Task}) {
+    const project = this.projects.find(p => p.id === event.projectId);
+    if (project && project.id) {
+      const updatedTasks = project.tasks.map(task => 
+        task.id === event.task.id ? event.task : task
+      );
+      
+      const updatedProject = {
+        ...project,
+        tasks: updatedTasks
+      };
+
+      this.projectService.updateProject(project.id, updatedProject)
+        .subscribe(() => {
+          const index = this.projects.findIndex(p => p.id === event.projectId);
+          if (index !== -1) {
+            this.projects[index] = updatedProject;
+          }
+        });
+    }
+  }
+
   updateProject(updatedProject: Project) {
     if (updatedProject.id) {
       this.projectService.updateProject(updatedProject.id, updatedProject)

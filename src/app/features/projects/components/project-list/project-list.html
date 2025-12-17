@@ -79,6 +79,7 @@
       <app-project-card
         [project]="project"
         (taskAdded)="addTaskToProject($event)"
+        (taskUpdated)="updateTaskInProject($event)"
         (projectUpdated)="updateProject($event)"
       ></app-project-card>
     }
