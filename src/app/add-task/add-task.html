@@ -19,19 +19,27 @@
       </button>
     </div>
 
-    <form (ngSubmit)="onSubmit()" #taskForm="ngForm" class="space-y-4">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="space-y-4">
       <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Titre de la tâche
         </label>
         <input
           type="text"
-          required
-          [(ngModel)]="newTask.title"
-          name="title"
+          formControlName="title"
           class="border rounded px-3 py-2 w-full bg-white dark:bg-gray-800
                  border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
         />
+        @if (title?.invalid && title?.touched) {
+          <p class="mt-1 text-xs text-red-500">
+            @if (title?.errors?.['required']) {
+              Le titre est obligatoire
+            }
+            @if (title?.errors?.['minlength']) {
+              Minimum 3 caractères (actuellement: {{ title?.value?.length || 0 }})
+            }
+          </p>
+        }
       </div>
 
       <div>
@@ -39,12 +47,20 @@
           Description
         </label>
         <textarea
-          required
-          [(ngModel)]="newTask.description"
-          name="description"
+          formControlName="description"
           class="border rounded px-3 py-2 w-full bg-white dark:bg-gray-800
                  border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
         ></textarea>
+        @if (description?.invalid && description?.touched) {
+          <p class="mt-1 text-xs text-red-500">
+            @if (description?.errors?.['required']) {
+              La description est obligatoire
+            }
+            @if (description?.errors?.['minlength']) {
+              Minimum 10 caractères (actuellement: {{ description?.value?.length || 0 }})
+            }
+          </p>
+        }
       </div>
 
       <div class="grid grid-cols-2 gap-4">
@@ -53,9 +69,7 @@
             Priorité
           </label>
           <select
-            [(ngModel)]="newTask.priority"
-            name="priority"
-            required
+            formControlName="priority"
             class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
                    border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
           >
@@ -70,9 +84,7 @@
             Statut
           </label>
           <select
-            [(ngModel)]="newTask.status"
-            name="status"
-            required
+            formControlName="status"
             class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
                    border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
           >
@@ -90,12 +102,20 @@
           </label>
           <input
             type="text"
-            required
-            [(ngModel)]="newTask.assignee"
-            name="assignee"
+            formControlName="assignee"
             class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
                    border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
           />
+          @if (assignee?.invalid && assignee?.touched) {
+            <p class="mt-1 text-xs text-red-500">
+              @if (assignee?.errors?.['required']) {
+                L'assigné est obligatoire
+              }
+              @if (assignee?.errors?.['minlength']) {
+                Minimum 2 caractères (actuellement: {{ assignee?.value?.length || 0 }})
+              }
+            </p>
+          }
         </div>
 
         <div>
@@ -104,12 +124,15 @@
           </label>
           <input
             type="date"
-            required
-            [(ngModel)]="newTask.deadline"
-            name="deadline"
+            formControlName="deadline"
             class="border rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-800
                    border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
           />
+          @if (deadline?.invalid && deadline?.touched) {
+            <p class="mt-1 text-xs text-red-500">
+              La date d'échéance est obligatoire
+            </p>
+          }
         </div>
       </div>
 
@@ -125,8 +148,12 @@
 
         <button
           type="submit"
-          class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded transition-colors duration-200"
+          [disabled]="taskForm.invalid"
+          class="inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-2 text-sm font-semibold text-white
+                 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:opacity-95 hover:shadow-lg
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
         >
+          <span class="text-lg leading-none">✓</span>
           Enregistrer
         </button>
       </div>

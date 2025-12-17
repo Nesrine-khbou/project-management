@@ -87,7 +87,19 @@
       "name": "test",
       "description": "test",
       "status": "Terminé",
-      "tasks": []
+      "tasks": [
+        {
+          "title": "task",
+          "description": "task description",
+          "priority": "Moyenne",
+          "status": "En attente",
+          "assignee": "nesrine",
+          "deadline": "2025-12-18",
+          "id": 1,
+          "createdAt": "2025-12-17",
+          "progress": "0%"
+        }
+      ]
     }
   ]
 }
